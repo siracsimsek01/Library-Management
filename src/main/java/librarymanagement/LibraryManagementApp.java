@@ -1,7 +1,7 @@
 package librarymanagement;
 
-import javax.xml.crypto.Data;
 import java.util.Scanner;
+
 public class LibraryManagementApp {
     private static final String FILENAME = "library.dat";
 
@@ -33,6 +33,7 @@ public class LibraryManagementApp {
                     break;
                 case 3:
                     addBook(library, scanner);
+                    break;
                 case 4:
                     removeBook(library, scanner);
                     break;
@@ -53,84 +54,85 @@ public class LibraryManagementApp {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
+    }
 
-        private static void registerUser(Library library, Scanner scanner) {
-            System.out.print("Enter username: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter password: ");
-            System.out.println("Enter role (admin/member): ");
-            String role = scanner.nextLine();
+    private static void registerUser(Library library, Scanner scanner) {
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine(); // Fixed: Added password input
+        System.out.println("Enter role (admin/member): ");
+        String role = scanner.nextLine();
 
-            User user;
-            if (role.equalsIgnoreCase("admin")) {
-                user = new Admin(username, password);
-            } else {
-                user = new Member(username, password);
-            }
-
-            library.addUser(user);
-            System.out.println("User registered successfully.");
+        User user;
+        if (role.equalsIgnoreCase("admin")) {
+            user = new Admin(username, password);
+        } else {
+            user = new Member(username, password);
         }
 
-        private static void loginUser(Library library, Scanner scanner) {
-            System.out.print("Enter username: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter password: ");
-            String password = scanner.nextLine();
+        library.addUser(user);
+        System.out.println("User registered successfully.");
+    }
 
-            User user = library.getUser(username);
-            if (user != null && user.getPassword().equals(password)) {
-                System.out.println("Login successful.");
-//                Handle user-specific actions (not shown in this snippet)
-            } else {
-                System.out.println("Invalid username or password.");
-            }
+    private static void loginUser(Library library, Scanner scanner) {
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        User user = library.getUser(username);
+        if (user != null && user.getPassword().equals(password)) {
+            System.out.println("Login successful.");
+            // Handle user-specific actions (not shown in this snippet)
+        } else {
+            System.out.println("Invalid username or password.");
         }
+    }
 
-        private static void addBook(Library library, Scanner scanner) {
-            System.out.print("Enter book title: ");
-            String title = scanner.nextLine();
-            System.out.print("Enter book author: ");
-            String author = scanner.nextLine();
-            System.out.print("Enter book ISBN: ");
-            String isbn = scanner.nextLine();
+    private static void addBook(Library library, Scanner scanner) {
+        System.out.print("Enter book title: ");
+        String title = scanner.nextLine();
+        System.out.print("Enter book author: ");
+        String author = scanner.nextLine();
+        System.out.print("Enter book ISBN: ");
+        String isbn = scanner.nextLine();
 
-            Book book = new Book(title, author, isbn);
-            library.addBook(book);
-            System.out.println("Book added successfully.");
-        }
+        Book book = new Book(title, author, isbn);
+        library.addBook(book);
+        System.out.println("Book added successfully.");
+    }
 
-        private static void removeBook(Library library, Scanner scanner) {
-            System.out.print("Enter book ISBN: ");
-            String isbn = scanner.nextLine();
-            library.removeBook(isbn);
-            System.out.println("Book removed successfully.");
-        }
+    private static void removeBook(Library library, Scanner scanner) {
+        System.out.print("Enter book ISBN: ");
+        String isbn = scanner.nextLine();
+        library.removeBook(isbn);
+        System.out.println("Book removed successfully.");
+    }
 
-        private static void borrowBook(Library library, Scanner scanner) {
-            System.out.print("Enter username: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter book ISBN: ");
-            String isbn = scanner.nextLine();
+    private static void borrowBook(Library library, Scanner scanner) {
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter book ISBN: ");
+        String isbn = scanner.nextLine();
 
-            library.borrowBook(isbn, username);
-            System.out.println("Book borrowed successfully.");
-        }
+        library.borrowBook(isbn, username);
+        System.out.println("Book borrowed successfully.");
+    }
 
-        private static void returnBook(Library library, Scanner scanner) {
-            System.out.print("Enter username: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter book ISBN: ");
-            String isbn = scanner.nextLine();
+    private static void returnBook(Library library, Scanner scanner) {
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter book ISBN: ");
+        String isbn = scanner.nextLine();
 
-            library.returnBook(isbn, username);
-            System.out.println("Book returned successfully.");
-        }
+        library.returnBook(isbn, username);
+        System.out.println("Book returned successfully.");
+    }
 
-        private static void viewBooks(Library library) {
-            for (Book book : library.getBooks().values()) {
-                System.out.println(book);
-            }
+    private static void viewBooks(Library library) {
+        for (Book book : library.getBooks().values()) {
+            System.out.println(book);
         }
     }
 }

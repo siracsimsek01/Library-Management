@@ -2,9 +2,9 @@ package librarymanagement;
 
 import java.io.Serializable;
 
-public class Book implements Serializable{
+public class Book implements Serializable {
     private String title;
-    private String authpr;
+    private String author; // Corrected typo
     private String isbn;
     private boolean isAvailable;
 

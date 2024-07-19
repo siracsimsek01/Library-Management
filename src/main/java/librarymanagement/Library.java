@@ -3,7 +3,8 @@ package librarymanagement;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-public class Library extends ILibraryOperations implements Serializable {
+
+public class Library implements ILibraryOperations, Serializable {
     private Map<String, Book> books;
     private Map<String, User> users;
 
@@ -14,7 +15,7 @@ public class Library extends ILibraryOperations implements Serializable {
 
     @Override
     public void addBook(Book book) {
-//        books.put(book.getIsbn(), book);
+        books.put(book.getIsbn(), book);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class Library extends ILibraryOperations implements Serializable {
             book.setAvailable(false);
             Member member = (Member) users.get(username);
             if (member != null) {
-                member.borrowBook(isbn);
+                member.borrowBook(this, isbn);
             }
         }
     }
@@ -41,7 +42,7 @@ public class Library extends ILibraryOperations implements Serializable {
             book.setAvailable(true);
             Member member = (Member) users.get(username);
             if (member != null) {
-                member.returnBook(isbn);
+                member.returnBook(this, isbn);
             }
         }
     }
@@ -58,7 +59,7 @@ public class Library extends ILibraryOperations implements Serializable {
         return books;
     }
 
-    public Map<String, user> getUsers() {
+    public Map<String, User> getUsers() { // Fixed return type
         return users;
     }
 }
